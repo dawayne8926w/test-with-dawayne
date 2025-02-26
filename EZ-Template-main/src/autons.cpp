@@ -379,7 +379,7 @@ void measure_offsets() {
 
 void leftside() {
 
-  clamp.set_value(false);
+  piston.set_value(false);
   chassis.pid_drive_set(24_in, DRIVE_SPEED, true); // drives forward 24 inches
   chassis.pid_wait();
 
@@ -393,9 +393,9 @@ void leftside() {
   chassis.pid_odom_set(-12_in, DRIVE_SPEED); // dreives backward 12 inches
   chassis.pid_wait();
 
-  pros::task::delay(1000); //waits 1 second
+  pros::delay(1000); //waits 1 second
 
-  conveyor.move_velocity(0)://stops conveyor
+  conveyor.move_velocity(0); //stops conveyor
 
   intake.move_velocity(0);//stops intake
 

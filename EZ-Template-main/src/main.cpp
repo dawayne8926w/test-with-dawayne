@@ -32,7 +32,9 @@ ez::Drive chassis(
 void initialize() {
   // Print our branding over your terminal :D
   ez::ez_template_print();
-
+  intake.set_encoder_units(E_MOTOR_ENCODER_DEGREES);
+  conveyor.set_encoder_units(E_MOTOR_ENCODER_DEGREES);
+  wallstake.set_encoder_units(E_MOTOR_ENCODER_DEGREES);
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
 
   // Look at your horizontal tracking wheel and decide if it's in front of the midline of your robot or behind it
@@ -58,14 +60,6 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"Drive\n\nDrive forward and come back", drive_example},
-      {"Turn\n\nTurn 3 times.", turn_example},
-      {"Drive and Turn\n\nDrive forward, turn, come back", drive_and_turn},
-      {"Drive and Turn\n\nSlow down during drive", wait_until_change_speed},
-      {"Swing Turn\n\nSwing in an 'S' curve", swing_example},
-      {"Motion Chaining\n\nDrive forward, turn, and come back, but blend everything together :D", motion_chaining},
-      {"Combine all 3 movements", combining_movements},
-      {"Interference\n\nAfter driving forward, robot performs differently if interfered or not", interfered_example},
       {"test auton", leftside},
   });
 
