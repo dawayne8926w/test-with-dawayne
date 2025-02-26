@@ -1,5 +1,5 @@
 #include "main.h"
-
+using namespace pros;
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
@@ -8,12 +8,12 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-5, -6, -7, -8},  // Left Chassis Ports (negative port will reverse it!)
-    {11, 15, 16, 17},  // Right Chassis Ports (negative port will reverse it!)
+    {-11, -19},  // Left Chassis Ports (negative port will reverse it!)
+    {12, 1},  // Right Chassis Ports (negative port will reverse it!)
 
-    21,      // IMU Port
-    4.125,   // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
-    420.0);  // Wheel RPM = cartridge * (motor gear / wheel gear)
+    5,      // IMU Port
+    3.25,   // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
+    200);  // Wheel RPM = cartridge * (motor gear / wheel gear)
 
 // Uncomment the trackers you're using here!
 // - `8` and `9` are smart ports (making these negative will reverse the sensor)
@@ -66,12 +66,6 @@ void initialize() {
       {"Motion Chaining\n\nDrive forward, turn, and come back, but blend everything together :D", motion_chaining},
       {"Combine all 3 movements", combining_movements},
       {"Interference\n\nAfter driving forward, robot performs differently if interfered or not", interfered_example},
-      {"Simple Odom\n\nThis is the same as the drive example, but it uses odom instead!", odom_drive_example},
-      {"Pure Pursuit\n\nGo to (0, 30) and pass through (6, 10) on the way.  Come back to (0, 0)", odom_pure_pursuit_example},
-      {"Pure Pursuit Wait Until\n\nGo to (24, 24) but start running an intake once the robot passes (12, 24)", odom_pure_pursuit_wait_until_example},
-      {"Boomerang\n\nGo to (0, 24, 45) then come back to (0, 0, 0)", odom_boomerang_example},
-      {"Boomerang Pure Pursuit\n\nGo to (0, 24, 45) on the way to (24, 24) then come back to (0, 0, 0)", odom_boomerang_injected_pure_pursuit_example},
-      {"Measure Offsets\n\nThis will turn the robot a bunch of times and calculate your offsets for your tracking wheels.", measure_offsets},
   });
 
   // Initialize chassis and auton selector
@@ -247,8 +241,8 @@ void opcontrol() {
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
 
-    chassis.opcontrol_tank();  // Tank control
-    // chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
+    // chassis.opcontrol_tank();  // Tank control
+     chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
     // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
@@ -256,7 +250,49 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
+    // intake control
+    if (master.get_digital(E_CONTROLLER_DIGITAL_L1)){
+      intake.move_velocity(600); 
+    }
+      else if (master.get_digital(E_CONTROLLER_DIGITAL_L2)){
+      intake.move_velocity(-600);
+    }
+        else {
+      intake.move_velocity(0);
+        }
 
+        
+        //conveyor control
+        if (master.get_digital(E_CONTROLLER_DIGITAL_R1)){
+          conveyor.move_velocity(600);
+        }
+          else if (master.get_digital(E_CONTROLLER_DIGITAL_R2)){
+          conveyor.move_velocity(-600);
+        }
+            else {
+          conveyor.move_velocity(0);
+            }
+
+
+            // wall stake
+            if (master.get_digital(E_CONTROLLER_DIGITAL_L1)){
+              wallstake.move_velocity(100);
+            }
+             else if (master.get_digital(E_CONTROLLER_DIGITAL_L2)){
+              wallstake.move_velocity(-100);
+            }
+               else {
+             wallstake.move_velocity(0);
+                }
+
+
+                //calmp control
+                if (master.get_digital(E_CONTROLLER_DIGITAL_A)){
+                  piston.set_value(true);
+                }
+                  else if (master.get_digital(E_CONTROLLER_DIGITAL_B)){
+                  piston.set_value(false);
+                }
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
 }
