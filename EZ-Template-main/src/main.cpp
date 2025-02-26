@@ -66,6 +66,7 @@ void initialize() {
       {"Motion Chaining\n\nDrive forward, turn, and come back, but blend everything together :D", motion_chaining},
       {"Combine all 3 movements", combining_movements},
       {"Interference\n\nAfter driving forward, robot performs differently if interfered or not", interfered_example},
+      {"test auton", leftside},
   });
 
   // Initialize chassis and auton selector
@@ -242,7 +243,7 @@ void opcontrol() {
     ez_template_extras();
 
     // chassis.opcontrol_tank();  // Tank control
-     chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
+       chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
     // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
@@ -286,11 +287,11 @@ void opcontrol() {
                 }
 
 
-                //calmp control
+                //clamp control
                 if (master.get_digital(E_CONTROLLER_DIGITAL_A)){
                   piston.set_value(true);
                 }
-                  else if (master.get_digital(E_CONTROLLER_DIGITAL_B)){
+                  else if (master.get_digital(E_CONTROLLER_DIGITAL_RIGHT)){
                   piston.set_value(false);
                 }
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME

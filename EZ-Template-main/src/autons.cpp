@@ -376,3 +376,30 @@ void measure_offsets() {
 // . . .
 // Make your own autonomous functions here!
 // . . .
+
+void leftside() {
+
+  clamp.set_value(false);
+  chassis.pid_drive_set(24_in, DRIVE_SPEED, true); // drives forward 24 inches
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(90_deg, TURN_SPEED); //turns right 90 degrees
+  chassis.pid_wait();
+
+  conveyor.move_velocity(600);// spin conveyor
+
+  intake.move_velocity(200); //spin intake
+ 
+  chassis.pid_odom_set(-12_in, DRIVE_SPEED); // dreives backward 12 inches
+  chassis.pid_wait();
+
+  pros::task::delay(1000); //waits 1 second
+
+  conveyor.move_velocity(0)://stops conveyor
+
+  intake.move_velocity(0);//stops intake
+
+  wallstake.move_absolute(100, 60);//tells wallstake motor to move 60 degrees up at 100 rpm
+
+  wallstake.move_absolute(100, -60); //tells wallstake motor to move 60 degrees down at 100 rpm
+}
