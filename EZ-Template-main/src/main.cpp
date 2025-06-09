@@ -8,12 +8,12 @@ using namespace pros;
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-11, -19},  // Left Chassis Ports (negative port will reverse it!)
-    {12, 1},  // Right Chassis Ports (negative port will reverse it!)
+    {18, 19, 21},  // Left Chassis Ports (negative port will reverse it!)
+    {-11, -12, -13},  // Right Chassis Ports (negative port will reverse it!)
 
     5,      // IMU Port
-    3.25,   // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
-    200);  // Wheel RPM = cartridge * (motor gear / wheel gear)
+    2.75,   // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
+    600);  // Wheel RPM = cartridge * (motor gear / wheel gear)
 
 // Uncomment the trackers you're using here!
 // - `8` and `9` are smart ports (making these negative will reverse the sensor)
@@ -33,8 +33,6 @@ void initialize() {
   // Print our branding over your terminal :D
   ez::ez_template_print();
   intake.set_encoder_units(E_MOTOR_ENCODER_DEGREES);
-  conveyor.set_encoder_units(E_MOTOR_ENCODER_DEGREES);
-  wallstake.set_encoder_units(E_MOTOR_ENCODER_DEGREES);
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
 
   // Look at your horizontal tracking wheel and decide if it's in front of the midline of your robot or behind it
